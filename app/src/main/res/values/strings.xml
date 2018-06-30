@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="selector">ENG</string>
+    <string name="NOTIF_TITLE">Alert Zone</string>
+    <string name="NOTIF_MESS">You entering in a dangerous zone!!!</string>
+
+    <string name="app_name">DanZon</string>
+    <string name="action_settings">DanZon</string>
+    <string name="desc_icon_home">Dangerousity level</string>
+
+    <string name="text_low_dangerousity">You are in a safe zone.</string>
+    <string name="text_mid_dangerousity">You are carefull.</string>
+    <string name="text_high_dangerousity">You are in a dangerous zone!!!</string>
+
+    <string name="text_sett_phone">Phone number</string>
+    <string name="text_sett_email">Email</string>
+
+    <string name="text_sett">SETTING</string>
+    <string name="text_sett_save">Save</string>
+
+    <string name="text_sett_error">The field is not correct.</string>
+    <string name="text_sett_save_successfully">Saved successfully!!</string>
+
+    <string name="alert_error_title">Error</string>
+    <string name="alert_error_message_load_data">Error while loading data.</string>
+    <string name="loading_text">Loading data...</string>
+    <string name="unknown_position">Unknown Position</string>
+    <string name="unknown_position_text">We apologize but the position is not in our system.</string>
+</resources>

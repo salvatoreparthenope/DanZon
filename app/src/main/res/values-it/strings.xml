@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="NOTIF_TITLE">Alert Zone</string>
+    <string name="NOTIF_MESS">You entering in a dangerous zone!!!</string>
+
+    <string name="app_name">DanZon</string>
+    <string name="action_settings">DanZon</string>
+    <string name="desc_icon_home">Dangerousity level</string>
+
+    <string name="text_low_dangerousity">Sei in una zona sicura.</string>
+    <string name="text_mid_dangerousity">Ti trovi in una zona a medio rischio.</string>
+    <string name="text_high_dangerousity">Ti trovi in una zona pericolosa!!!</string>
+
+    <string name="text_sett_phone">Cellulare</string>
+    <string name="text_sett_email">Email</string>
+
+    <string name="text_sett">SETTING</string>
+    <string name="text_sett_save">Salva</string>
+
+    <string name="text_sett_error_phone">Il campo non è corretto.</string>
+    <string name="text_sett_save_successfully">Saved successfully!!</string>
+
+    <string name="alert_error_title">Errore</string>
+    <string name="alert_error_message_load_data">Errore durante il caricamento dei dati.</string>
+    <string name="loading_text">Caricamento dei dati...</string>
+    <string name="unknown_position">Posizione sconosciuta</string>
+    <string name="unknown_position_text">Ci scusiamo per l\'inconveniente ma questa posizione non è presente nei nostri sistemi.</string>
+</resources>
