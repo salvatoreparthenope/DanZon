@@ -26,4 +26,5 @@
     <string name="loading_text">Loading data...</string>
     <string name="unknown_position">Unknown Position</string>
     <string name="unknown_position_text">We apologize but the position is not in our system.</string>
+    <string name="permissions_denied">You must grant the permissions.</string>
 </resources>

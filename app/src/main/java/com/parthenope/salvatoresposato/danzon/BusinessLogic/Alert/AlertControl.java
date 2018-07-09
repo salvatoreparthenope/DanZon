@@ -20,11 +20,11 @@ public class AlertControl {
     public void SendAlerts() {
         long now = System.currentTimeMillis();
 
-        if(now - lastSend > 10000) {
+        if(now - lastSend > 60000) {
             for (Command comm : commands) {
                 comm.SendAlert();
             }
-            lastSend = now;
+            lastSend = System.currentTimeMillis();
         }
     }
 

@@ -31,7 +31,7 @@ public class GpsSubject extends BroadcastReceiver {
         String lastTimeDangerousityInterval = Variable.getValue(GlobalConstant.KEY_LAST_TIME_DANGEROUSITY_INTERVAL);
         String descriptionArea = Variable.getValue(GlobalConstant.DESCRIPTION_AREA);
 
-        if(lastLocation != null && lastLocation.equals(NOT_FOUND)){
+        if(lastLocation == null || lastLocation.equals(NOT_FOUND)){
             return null;
         }
 

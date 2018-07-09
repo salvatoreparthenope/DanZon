@@ -40,8 +40,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
                 android:gravity="center_horizontal"
-                android:text="@string/text_low_dangerousity"
-                android:textColor="#00b050"
+                android:text="@string/unknown_position"
+                android:textColor="#000000"
                 android:textSize="30sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -58,7 +58,8 @@
                 android:id="@+id/ripple"
                 android:layout_width="match_parent"
                 android:layout_height="260dp"
-                android:layout_gravity="center" />
+                android:layout_gravity="center"
+                android:visibility="gone" />
 
             <ImageView
                 android:id="@+id/imageIcon"
@@ -71,7 +72,7 @@
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/alert_low_dangerousity" />
+                app:srcCompat="@drawable/alert" />
 
 
         </FrameLayout>
@@ -115,7 +116,6 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom"
                     android:gravity="center_horizontal"
-                    android:text="DL : 80%"
                     android:textColor="#000000"
                     android:textSize="18sp" />
 
@@ -126,7 +126,7 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="5dp"
                     android:gravity="center_horizontal"
-                    android:text="In questa zona non si sono mai verificate aggressioni o risse."
+                    android:text="@string/unknown_position_text"
                     android:textSize="18sp" />
                 </LinearLayout>
 

@@ -8,6 +8,7 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.location.Location;
 import android.os.IBinder;
+import android.widget.Toast;
 
 import com.github.nisrulz.sensey.Sensey;
 import com.github.nisrulz.sensey.ShakeDetector;
@@ -17,6 +18,8 @@ import com.parthenope.salvatoresposato.danzon.BusinessLogic.Alert.SmsAlert;
 import com.parthenope.salvatoresposato.danzon.BusinessLogic.ServiceGpsNotify.GpsSubject;
 import com.parthenope.salvatoresposato.danzon.Database.GpsCoordinate;
 import com.parthenope.salvatoresposato.danzon.Database.Variable;
+import com.parthenope.salvatoresposato.danzon.R;
+import com.parthenope.salvatoresposato.danzon.SettingActivity;
 import com.parthenope.salvatoresposato.danzon.Shared.GlobalConstant;
 
 import java.util.Random;
@@ -25,8 +28,11 @@ import java.util.TimerTask;
 
 import io.nlopez.smartlocation.OnLocationUpdatedListener;
 import io.nlopez.smartlocation.SmartLocation;
+import io.nlopez.smartlocation.geofencing.model.GeofenceModel;
 import io.nlopez.smartlocation.location.config.LocationAccuracy;
 import io.nlopez.smartlocation.location.config.LocationParams;
+import io.nlopez.smartlocation.location.providers.LocationGooglePlayServicesProvider;
+import io.nlopez.smartlocation.location.providers.LocationManagerProvider;
 
 import static com.parthenope.salvatoresposato.danzon.Shared.GlobalConstant.ACTION_INTENT_UPDATE_LOCATION;
 import static com.parthenope.salvatoresposato.danzon.Shared.GlobalConstant.KEY_INTENT_LOCATION;
@@ -54,11 +60,9 @@ public class ServiceSensor extends Service implements SensorEventListener {
      * Initilize and configure the gps library
      */
     private void initGps() {
-
-        LocationParams parameters = (new LocationParams.Builder()).setAccuracy(LocationAccuracy.HIGH).setDistance(20.0F).setInterval(30000L).build();
         SmartLocation.with(getApplicationContext())
                 .location()
-                .config(parameters)
+                .config(LocationParams.NAVIGATION)
                 .continuous()
                 .start(new OnLocationUpdatedListener() {
 
@@ -72,6 +76,7 @@ public class ServiceSensor extends Service implements SensorEventListener {
 
                 });
     }
+
 
     /**
      * Initilize and configure the sensor library

@@ -18,11 +18,12 @@
     <string name="text_sett_save">Salva</string>
 
     <string name="text_sett_error_phone">Il campo non è corretto.</string>
-    <string name="text_sett_save_successfully">Saved successfully!!</string>
+    <string name="text_sett_save_successfully">Impostazioni salvate correttamente!!</string>
 
     <string name="alert_error_title">Errore</string>
     <string name="alert_error_message_load_data">Errore durante il caricamento dei dati.</string>
     <string name="loading_text">Caricamento dei dati...</string>
     <string name="unknown_position">Posizione sconosciuta</string>
     <string name="unknown_position_text">Ci scusiamo per l\'inconveniente ma questa posizione non è presente nei nostri sistemi.</string>
+    <string name="permissions_denied">Devi accettare tutti i permessi.</string>
 </resources>

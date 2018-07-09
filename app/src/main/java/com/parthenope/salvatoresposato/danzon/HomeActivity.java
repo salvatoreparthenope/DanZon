@@ -106,7 +106,7 @@ public class HomeActivity extends AppCompatActivity implements GpsObserver {
 
                               },
                 0,
-                60000);
+                120000);
     }
 
     /**
@@ -115,7 +115,6 @@ public class HomeActivity extends AppCompatActivity implements GpsObserver {
     private void init() {
         loadData();
         registerBroadcastReceiver();
-        startService();
         initDefaultComponent();
         requestPermission();
     }
@@ -134,6 +133,7 @@ public class HomeActivity extends AppCompatActivity implements GpsObserver {
     public void onDestroy() {
         super.onDestroy();
         unregisterReceiver(gpsSubject);
+        stopService(new Intent(this, ServiceSensor.class));
     }
 
     /**
@@ -144,7 +144,6 @@ public class HomeActivity extends AppCompatActivity implements GpsObserver {
     }
 
     private void initDefaultComponent() {
-        if(Variable.getValue(GlobalConstant.AREA_FOUNDED) == null) {
             runOnUiThread(new Runnable() {
 
                 @Override
@@ -159,9 +158,6 @@ public class HomeActivity extends AppCompatActivity implements GpsObserver {
                 }
 
             });
-        }else{
-            update();
-        }
     }
 
     private void startService() {
@@ -178,8 +174,24 @@ public class HomeActivity extends AppCompatActivity implements GpsObserver {
                     != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(HomeActivity.this, Manifest.permission.SEND_SMS)
                     != PackageManager.PERMISSION_GRANTED) {
                 requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_WIFI_STATE, Manifest.permission.CHANGE_WIFI_STATE, Manifest.permission.SEND_SMS, Manifest.permission.BODY_SENSORS}, 0);
+            }else{
+                startService();
             }
+        }else{
+            startService();
         }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,String permissions[],int[] grantResults){
+       switch (requestCode){
+           case 0:
+               if(grantResults.length == 5){
+                   startService();
+               }else{
+                   Toast.makeText(HomeActivity.this,getString(R.string.permissions_denied),Toast.LENGTH_LONG);
+               }
+       }
     }
 
     private void registerBroadcastReceiver() {
@@ -236,9 +248,6 @@ public class HomeActivity extends AppCompatActivity implements GpsObserver {
                 textLastUpdate.setText("LU: " + dt.format(lastTimeUpdateLocation));
             }
         });
-
-        if (lastTimeDangerousityInterval == null || actualIntervalId == lastTimeDangerousityInterval.getId())
-            return;
 
         actualIntervalId = lastTimeDangerousityInterval.getId();
 
