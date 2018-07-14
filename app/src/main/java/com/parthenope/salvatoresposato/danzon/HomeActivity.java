@@ -240,7 +240,7 @@ public class HomeActivity extends AppCompatActivity implements GpsObserver {
             public void run() {
                 Object[] state = gpsSubject.getState();
 
-                // Se non esiste nessun intervallo
+                // Interval not exist
                 if (state == null) {
                     actualIntervalId = 0;
                     initDefaultComponent();
