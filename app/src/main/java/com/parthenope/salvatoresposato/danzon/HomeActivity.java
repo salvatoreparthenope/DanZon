@@ -1,6 +1,7 @@
 package com.parthenope.salvatoresposato.danzon;
 
 import android.Manifest;
+import android.app.Notification;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
@@ -36,6 +37,7 @@ import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import br.com.goncalves.pugnotification.notification.PugNotification;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -87,9 +89,24 @@ public class HomeActivity extends AppCompatActivity implements GpsObserver {
 
                                   @Override
                                   public void run() {
-                                      Utility.loadDataFromService(HomeActivity.this, new Utility.HandlerLoadData() {
+                                      Utility.loadVersionFromService(HomeActivity.this, new Utility.HandlerLoadData() {
                                           @Override
                                           public void onSuccess() {
+                                              Utility.loadDataFromService(HomeActivity.this, new Utility.HandlerLoadData() {
+                                                  @Override
+                                                  public void onSuccess() {
+                                                  }
+
+                                                  @Override
+                                                  public void onFailure() {
+                                                      runOnUiThread(new Runnable() {
+                                                          @Override
+                                                          public void run() {
+                                                              onFailureM();
+                                                          }
+                                                      });
+                                                  }
+                                              });
                                           }
 
                                           @Override
@@ -102,6 +119,7 @@ public class HomeActivity extends AppCompatActivity implements GpsObserver {
                                               });
                                           }
                                       });
+
                                   }
 
                               },
@@ -140,24 +158,24 @@ public class HomeActivity extends AppCompatActivity implements GpsObserver {
      *
      */
     private void onFailureM() {
-        Toast.makeText(HomeActivity.this,getString(R.string.alert_error_message_load_data),Toast.LENGTH_LONG).show();
+        Toast.makeText(HomeActivity.this, getString(R.string.alert_error_message_load_data), Toast.LENGTH_LONG).show();
     }
 
     private void initDefaultComponent() {
-            runOnUiThread(new Runnable() {
+        runOnUiThread(new Runnable() {
 
-                @Override
-                public void run() {
-                    textBigMessage.setTextColor(Color.parseColor("#000000"));
-                    ripple.setVisibility(View.GONE);
-                    textPercentage.setText("");
-                    textPlace.setText("");
-                    imageIcon.setImageResource(R.drawable.alert);
-                    textBigMessage.setText(R.string.unknown_position);
-                    textDescription.setText(R.string.unknown_position_text);
-                }
+            @Override
+            public void run() {
+                textBigMessage.setTextColor(Color.parseColor("#000000"));
+                ripple.setVisibility(View.GONE);
+                textPercentage.setText("");
+                textPlace.setText("");
+                imageIcon.setImageResource(R.drawable.alert);
+                textBigMessage.setText(R.string.unknown_position);
+                textDescription.setText(R.string.unknown_position_text);
+            }
 
-            });
+        });
     }
 
     private void startService() {
@@ -174,31 +192,33 @@ public class HomeActivity extends AppCompatActivity implements GpsObserver {
                     != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(HomeActivity.this, Manifest.permission.SEND_SMS)
                     != PackageManager.PERMISSION_GRANTED) {
                 requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_WIFI_STATE, Manifest.permission.CHANGE_WIFI_STATE, Manifest.permission.SEND_SMS, Manifest.permission.BODY_SENSORS}, 0);
-            }else{
+            } else {
                 startService();
             }
-        }else{
+        } else {
             startService();
         }
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode,String permissions[],int[] grantResults){
-       switch (requestCode){
-           case 0:
-               if(grantResults.length == 5){
-                   startService();
-               }else{
-                   Toast.makeText(HomeActivity.this,getString(R.string.permissions_denied),Toast.LENGTH_LONG);
-               }
-       }
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case 0:
+                if (grantResults.length == 5) {
+                    startService();
+                } else {
+                    Toast.makeText(HomeActivity.this, getString(R.string.permissions_denied), Toast.LENGTH_LONG);
+                }
+        }
     }
 
     private void registerBroadcastReceiver() {
 
         gpsSubject = new GpsSubject();
         gpsSubject.attach(this);
-        gpsSubject.attach(new GpsConObserverNotification(gpsSubject, getApplicationContext()));
+
+        // Notifica push - La push notification non lavora su tutte le versioni di android
+        //gpsSubject.attach(new GpsConObserverNotification(gpsSubject, getApplicationContext()));
 
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(GlobalConstant.ACTION_INTENT_UPDATE_LOCATION);
@@ -286,8 +306,7 @@ public class HomeActivity extends AppCompatActivity implements GpsObserver {
                 } else {
                     textDescription.setText(lastTimeDangerousityInterval.description.split("\\|")[0]);
                 }
-
-                Variable.updateOrAddVariabile(GlobalConstant.AREA_FOUNDED,GlobalConstant.KEY_LAST_LOCATION);
+                Variable.updateOrAddVariabile(GlobalConstant.AREA_FOUNDED, GlobalConstant.KEY_LAST_LOCATION);
 
             }
         });

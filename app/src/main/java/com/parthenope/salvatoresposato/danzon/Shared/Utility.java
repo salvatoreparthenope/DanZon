@@ -2,14 +2,11 @@ package com.parthenope.salvatoresposato.danzon.Shared;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.graphics.Color;
 import android.net.ConnectivityManager;
 
 import com.google.gson.Gson;
-import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.MySSLSocketFactory;
 import com.loopj.android.http.SyncHttpClient;
@@ -17,7 +14,6 @@ import com.parthenope.salvatoresposato.danzon.Database.Area;
 import com.parthenope.salvatoresposato.danzon.Database.GpsCoordinate;
 import com.parthenope.salvatoresposato.danzon.Database.Interval;
 import com.parthenope.salvatoresposato.danzon.Database.Variable;
-import com.parthenope.salvatoresposato.danzon.R;
 import com.parthenope.salvatoresposato.danzon.WebService.object.AreaJson;
 import com.parthenope.salvatoresposato.danzon.WebService.object.DataJson;
 import com.parthenope.salvatoresposato.danzon.WebService.object.GpsCoordinateJson;
@@ -51,6 +47,54 @@ public class Utility {
     }
 
     /**
+     * Check version of data
+     * @param context
+     * @param handler
+     */
+    public static void loadVersionFromService(final Context context,final HandlerLoadData handler){
+
+        if(!isOnline(context)) {
+            handler.onSuccess();
+            return;
+        }
+
+        SyncHttpClient client = new SyncHttpClient();
+        client.setSSLSocketFactory(MySSLSocketFactory.getFixedSocketFactory());
+        client.get(GlobalConstant.URL_SERVICE_VERSION, new AsyncHttpResponseHandler() {
+
+            @Override
+            public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, byte[] responseBody) {
+
+                try {
+
+                    String versionResponse = new String(responseBody);
+                    String version = Variable.getValue(GlobalConstant.KEY_VERSION_UPDATE_DATA);
+                    if(version == null || !versionResponse.equals(""+version)) {
+                        handler.onSuccess();
+                    }
+
+                }catch (Exception ex){
+                    Variable.updateOrAddVariabile(GlobalConstant.KEY_VERSION_UPDATE_DATA, GlobalConstant.KEY_STATE_UPDATE_DATA_ERRORE);
+                    handler.onFailure();
+                }
+
+            }
+
+            @Override
+            public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, byte[] responseBody, Throwable error) {
+                Variable.updateOrAddVariabile(GlobalConstant.KEY_VERSION_UPDATE_DATA, GlobalConstant.KEY_STATE_UPDATE_DATA_ERRORE);
+                ((Activity)context).runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        handler.onFailure();
+                    }
+                });
+            }
+
+        });
+    }
+
+    /**
      * Load data from web service
      */
     public static void loadDataFromService(final Context context,final HandlerLoadData handler){
@@ -62,7 +106,7 @@ public class Utility {
 
         SyncHttpClient client = new SyncHttpClient();
         client.setSSLSocketFactory(MySSLSocketFactory.getFixedSocketFactory());
-        client.get(GlobalConstant.URL_SERVICE, new AsyncHttpResponseHandler() {
+        client.get(GlobalConstant.URL_SERVICE_DATA, new AsyncHttpResponseHandler() {
 
             @Override
             public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, byte[] responseBody) {

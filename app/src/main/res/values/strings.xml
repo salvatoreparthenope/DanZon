@@ -8,9 +8,9 @@
     <string name="action_settings">DanZon</string>
     <string name="desc_icon_home">Dangerousity level</string>
 
-    <string name="text_low_dangerousity">You are in a safe zone.</string>
-    <string name="text_mid_dangerousity">You are carefull.</string>
-    <string name="text_high_dangerousity">You are in a dangerous zone!!!</string>
+    <string name="text_low_dangerousity">Safe zone.</string>
+    <string name="text_mid_dangerousity">Dangerous zone!!!.</string>
+    <string name="text_high_dangerousity">Dangerous zone!!!</string>
 
     <string name="text_sett_phone">Phone number</string>
     <string name="text_sett_email">Email</string>

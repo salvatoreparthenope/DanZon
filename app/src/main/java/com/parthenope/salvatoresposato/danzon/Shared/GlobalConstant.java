@@ -2,7 +2,8 @@ package com.parthenope.salvatoresposato.danzon.Shared;
 
 public class GlobalConstant {
 
-    public static String URL_SERVICE = "https://danzon.000webhostapp.com/getData.php";
+    public static String URL_SERVICE_DATA = "https://danzon.000webhostapp.com/getData.php";
+    public static String URL_SERVICE_VERSION = "https://danzon.000webhostapp.com/getVersion.php";
 
     public static final short TYPE_INTERVAL_TIME = 0;
     public static final short TYPE_INTERVAL_DATE = 1;
@@ -23,6 +24,7 @@ public class GlobalConstant {
     public static String KEY_VERSION_UPDATE_DATA = "KEY_VERSION_UPDATE_DATA";
     public static String KEY_STATE_UPDATE_DATA_ERRORE = "ERRORE";
     public static String KEY_INTENT_LOCATION = "LOCATION";
+    public static String KEY_LAST_LEVEL = "LAST_LEVEL";
 
     public static String DESCRIPTION_AREA = "DESCRIPTION_AREA";
     public static String AREA_FOUNDED = "AREA_FOUNDED";

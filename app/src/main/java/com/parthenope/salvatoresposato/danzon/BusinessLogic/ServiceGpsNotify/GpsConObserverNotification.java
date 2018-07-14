@@ -37,10 +37,11 @@ public class GpsConObserverNotification implements GpsObserver {
             return;
 
         // Check if interval is been already fired
-        String idFiredInterval = Variable.getValue(GlobalConstant.KEY_ID_FIRED_INTERVAL);
-        if (interval != null && (idFiredInterval == null || Long.valueOf(idFiredInterval) != interval.getId())) {
-
-            Variable.updateOrAddVariabile(GlobalConstant.KEY_ID_FIRED_INTERVAL, String.valueOf(interval.getId()));
+        String lastLevel = Variable.getValue(GlobalConstant.KEY_LAST_LEVEL);
+        if(lastLevel == null)
+            lastLevel = "0";
+        int lastLevelInteger = Integer.valueOf(lastLevel);
+        if (lastLevelInteger < interval.dangerousLevel) {
 
             // if dangerousity level is more high of low level...
             if ( interval.dangerousLevel > GlobalConstant.DANGEROUSITY_LEVEL_MIDDLE)
@@ -48,12 +49,14 @@ public class GpsConObserverNotification implements GpsObserver {
                         .load()
                         .title(R.string.NOTIF_TITLE)
                         .message(R.string.NOTIF_MESS)
-                        .smallIcon(R.drawable.pugnotification_ic_launcher)
-                        .largeIcon(R.drawable.pugnotification_ic_launcher)
+                        .smallIcon(R.drawable.alert)
+                        .largeIcon(R.drawable.alert)
                         .flags(Notification.DEFAULT_ALL)
                         .simple()
                         .build();
 
         }
+
+        Variable.updateOrAddVariabile(GlobalConstant.KEY_LAST_LEVEL,interval.dangerousLevel+"");
     }
 }
