@@ -218,7 +218,7 @@ public class HomeActivity extends AppCompatActivity implements GpsObserver {
         gpsSubject.attach(this);
 
         // Notifica push - La push notification non lavora su tutte le versioni di android
-        //gpsSubject.attach(new GpsConObserverNotification(gpsSubject, getApplicationContext()));
+        //gpsSubject.attach(new GpsConObserverNotification(gpsSubject, getApplicationContext()))
 
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(GlobalConstant.ACTION_INTENT_UPDATE_LOCATION);
